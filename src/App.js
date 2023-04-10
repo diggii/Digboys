@@ -1,50 +1,49 @@
-import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import { ConnectWallet } from "@thirdweb-dev/react";
+import "./styles/Home.css";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
+export default function Home() {
+  return (
+    <div className="container">
+      <main className="main">
+        <h1 className="title">
+          Welcome to <a href="https://thirdweb.com/">thirdweb</a>!
+        </h1>
 
-  handleClick = api => e => {
-    e.preventDefault()
+        <p className="description">
+          Get started by configuring your desired network in{" "}
+          <code className="code">src/index.js</code>, then modify the{" "}
+          <code className="code">src/App.js</code> file!
+        </p>
 
-    this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
+        <div className="connect">
+          <ConnectWallet dropdownPosition={{ side: 'bottom', align: 'center'}} />
+        </div>
 
-  render() {
-    const { loading, msg } = this.state
+        <div className="grid">
+          <a href="https://portal.thirdweb.com/" className="card">
+            <h2>Portal &rarr;</h2>
+            <p>
+              Guides, references and resources that will help you build with
+              thirdweb.
+            </p>
+          </a>
 
-    return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
+          <a href="https://thirdweb.com/dashboard" className="card">
+            <h2>Dashboard &rarr;</h2>
+            <p>
+              Deploy, configure and manage your smart contracts from the
+              dashboard.
+            </p>
+          </a>
+
+          <a href="https://portal.thirdweb.com/templates" className="card">
+            <h2>Templates &rarr;</h2>
+            <p>
+              Discover and clone template projects showcasing thirdweb features.
+            </p>
+          </a>
+        </div>
+      </main>
+    </div>
+  );
 }
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <LambdaDemo />
-        </header>
-      </div>
-    )
-  }
-}
-
-export default App
